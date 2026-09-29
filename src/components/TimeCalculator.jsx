@@ -15,43 +15,35 @@ export default function TimeCalculator() {
 
   return (
     <div className="space-y-4">
-      {/* Distance */}
       <div>
-        <label className="text-xs font-medium mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>Jarak (km)</label>
+        <label className="text-[11px] font-medium mb-1.5 block uppercase tracking-wide" style={{ color: 'var(--text-secondary)' }}>Jarak (km)</label>
         <input type="number" value={dist} onChange={e => setDist(+e.target.value || 0)}
-          className="w-full px-3 py-3 rounded-lg border text-center text-lg font-medium" 
-          style={{ background: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
+          className="w-full px-3 py-3 rounded-md border text-center text-lg font-medium" style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)', fontFamily: 'DM Sans' }} />
       </div>
-
-      {/* Pace */}
       <div>
-        <label className="text-xs font-medium mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>Pace (min/km)</label>
+        <label className="text-[11px] font-medium mb-1.5 block uppercase tracking-wide" style={{ color: 'var(--text-secondary)' }}>Pace (min/km)</label>
         <div className="grid grid-cols-3 gap-2">
           <div>
             <input type="number" value={pm} onChange={e => setPm(+e.target.value || 0)} placeholder="6"
-              className="w-full px-2 py-3 rounded-lg border text-center text-lg font-medium" 
-              style={{ background: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
-            <span className="block text-[10px] text-center mt-1" style={{ color: 'var(--text-secondary)' }}>Menit</span>
+              className="w-full px-2 py-3 rounded-md border text-center text-lg font-medium" style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)', fontFamily: 'DM Sans' }} />
+            <span className="block text-[10px] text-center mt-1 uppercase tracking-wide" style={{ color: 'var(--text-tertiary)' }}>Menit</span>
           </div>
           <div className="flex items-center justify-center">
-            <span className="text-xl font-medium" style={{ color: 'var(--text-secondary)' }}>:</span>
+            <span className="text-xl font-medium" style={{ color: 'var(--text-tertiary)' }}>:</span>
           </div>
           <div>
             <input type="number" value={ps} onChange={e => setPs(+e.target.value || 0)} placeholder="0"
-              className="w-full px-2 py-3 rounded-lg border text-center text-lg font-medium" 
-              style={{ background: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
-            <span className="block text-[10px] text-center mt-1" style={{ color: 'var(--text-secondary)' }}>Detik</span>
+              className="w-full px-2 py-3 rounded-md border text-center text-lg font-medium" style={{ background: 'var(--surface)', borderColor: 'var(--border)', color: 'var(--text)', fontFamily: 'DM Sans' }} />
+            <span className="block text-[10px] text-center mt-1 uppercase tracking-wide" style={{ color: 'var(--text-tertiary)' }}>Detik</span>
           </div>
         </div>
       </div>
-
-      <button onClick={calc} className="w-full py-3.5 rounded-lg font-medium text-white active:scale-[0.98]"
+      <button onClick={calc} className="w-full py-3 rounded-md font-medium text-white active:scale-[0.98]"
         style={{ background: 'var(--primary)' }}>Hitung</button>
-
       {result && (
-        <div className="p-4 rounded-xl text-center" style={{ background: 'var(--surface)' }}>
-          <p className="text-3xl font-bold" style={{ color: 'var(--primary)' }}>{result.time}</p>
-          <p className="text-[11px]" style={{ color: 'var(--text-secondary)' }}>estimasi waktu</p>
+        <div className="p-4 rounded-lg text-center" style={{ background: 'var(--surface)' }}>
+          <p className="text-3xl font-bold font-heading" style={{ color: 'var(--primary)' }}>{result.time}</p>
+          <p className="text-[11px] uppercase tracking-wide" style={{ color: 'var(--text-secondary)' }}>estimasi waktu</p>
         </div>
       )}
     </div>

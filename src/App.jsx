@@ -39,9 +39,9 @@ export default function App() {
       {/* Header */}
       <header className="sticky top-0 z-20 border-b" style={{ background: 'var(--bg)', borderColor: 'var(--border)' }}>
         <div className="max-w-lg mx-auto px-4 h-12 flex items-center justify-between">
-          <h1 className="text-sm font-semibold" style={{ color: 'var(--primary)' }}>Running Calc</h1>
-          <button onClick={toggleTheme} className="w-8 h-8 flex items-center justify-center rounded-lg text-sm"
-            style={{ background: 'var(--surface)' }}>
+          <h1 className="text-sm font-semibold font-heading" style={{ color: 'var(--primary)' }}>Running Calc</h1>
+          <button onClick={toggleTheme} className="w-8 h-8 flex items-center justify-center rounded-md text-sm"
+            style={{ background: 'var(--surface)', border: '1px solid var(--border)' }}>
             {theme === 'light' ? '🌙' : '☀️'}
           </button>
         </div>
@@ -53,8 +53,8 @@ export default function App() {
       </main>
 
       {/* Bottom Nav */}
-      <nav className="fixed bottom-0 left-0 right-0 z-20 border-t safe-area-bottom" 
-        style={{ background: 'var(--bg)', borderColor: 'var(--border)', paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}>
+      <nav className="fixed bottom-0 left-0 right-0 z-20 border-t safe-area-bottom"
+        style={{ background: 'var(--bg)', borderColor: 'var(--border)' }}>
         <div className="max-w-lg mx-auto flex">
           {tabs.map((c) => (
             <button key={c.id} onClick={() => setActive(c.id)}
