@@ -4,6 +4,7 @@ import DistanceCalculator from './components/DistanceCalculator';
 import TimeCalculator from './components/TimeCalculator';
 import RacePrediction from './components/RacePrediction';
 import HRZoneCalculator from './components/HRZoneCalculator';
+import TrainingSimulator from './components/TrainingSimulator';
 
 const tabs = [
   { id: 'pace', label: 'Pace', icon: '🏃' },
@@ -11,6 +12,7 @@ const tabs = [
   { id: 'time', label: 'Time', icon: '⏱️' },
   { id: 'race', label: 'Race', icon: '🏆' },
   { id: 'hr', label: 'HR Zone', icon: '💓' },
+  { id: 'train', label: 'Train', icon: '🗓️' },
 ];
 
 export default function App() {
@@ -32,7 +34,7 @@ export default function App() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 min-w-[60px] py-3 px-2 rounded-lg text-sm font-medium transition-all ${
+              className={`flex-1 min-w-[55px] py-3 px-2 rounded-lg text-sm font-medium transition-all ${
                 activeTab === tab.id
                   ? 'bg-green-500 text-white shadow-sm'
                   : 'text-gray-600 hover:bg-gray-100'
@@ -51,6 +53,7 @@ export default function App() {
           {activeTab === 'time' && <TimeCalculator />}
           {activeTab === 'race' && <RacePrediction />}
           {activeTab === 'hr' && <HRZoneCalculator />}
+          {activeTab === 'train' && <TrainingSimulator />}
         </div>
       </main>
     </div>

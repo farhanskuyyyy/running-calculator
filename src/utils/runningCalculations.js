@@ -144,3 +144,94 @@ export const ZONE_TRAINING = [
   { zone: 4, weekly: '5-10%', sessions: 'Threshold runs, intervals', intensity: 'Hard' },
   { zone: 5, weekly: '2-5%', sessions: 'Speed work, hill repeats', intensity: 'Very Hard' },
 ];
+
+// === Training Simulator ===
+
+// Calculate pace improvement needed
+export function calculatePaceImprovement(currentPace, targetPace) {
+  const improvement = ((currentPace - targetPace) / currentPace) * 100;
+  return improvement.toFixed(1);
+}
+
+// Estimate weeks needed based on improvement percentage
+export function estimateWeeks(improvementPercent) {
+  const pct = parseFloat(improvementPercent);
+  if (pct <= 5) return 4;
+  if (pct <= 10) return 8;
+  if (pct <= 15) return 12;
+  if (pct <= 20) return 16;
+  return 20;
+}
+
+// Generate weekly training plan (Polarized 80/20)
+export function generateTrainingPlan(currentPace, targetPace, weeks) {
+  const improvement = (currentPace - targetPace) / weeks;
+  const plan = [];
+  
+  for (let week = 1; week <= weeks; week++) {
+    const progress = week / weeks;
+    const currentWeekPace = currentPace - (improvement * week);
+    
+    // Progressive overload: increase volume slightly each week
+    const volumeMultiplier = 1 + (progress * 0.3);
+    
+    // Week 1-3: Base, Week 4: Recovery, repeat
+    const isRecoveryWeek = week % 4 === 0;
+    
+    const weekPlan = {
+      week,
+      phase: isRecoveryWeek ? 'Recovery' : 
+             week <= weeks * 0.3 ? 'Base Building' :
+             week <= weeks * 0.6 ? 'Build Phase' : 'Peak Phase',
+      targetPace: Math.round(currentWeekPace),
+      volume: isRecoveryWeek ? 0.7 : volumeMultiplier,
+      isRecoveryWeek,
+      days: generateWeekDays(week, weeks, currentWeekPace, isRecoveryWeek)
+    };
+    
+    plan.push(weekPlan);
+  }
+  
+  return plan;
+}
+
+// Generate daily training for a week
+function generateWeekDays(week, totalWeeks, currentPace, isRecovery) {
+  if (isRecovery) {
+    return [
+      { day: 'Mon', type: 'Rest', zone: '-', duration: '-', notes: 'Complete rest' },
+      { day: 'Tue', type: 'Easy Run', zone: 'Z1-Z2', duration: '30 min', pace: '+60s/km', notes: 'Very easy, conversational' },
+      { day: 'Wed', type: 'Rest', zone: '-', duration: '-', notes: 'Complete rest or cross-train' },
+      { day: 'Thu', type: 'Easy Run', zone: 'Z2', duration: '25 min', pace: '+45s/km', notes: 'Relaxed effort' },
+      { day: 'Fri', type: 'Rest', zone: '-', duration: '-', notes: 'Complete rest' },
+      { day: 'Sat', type: 'Easy Run', zone: 'Z2', duration: '35 min', pace: '+45s/km', notes: 'Enjoy the run' },
+      { day: 'Sun', type: 'Rest', zone: '-', duration: '-', notes: 'Complete rest' },
+    ];
+  }
+  
+  const progress = week / totalWeeks;
+  
+  return [
+    { day: 'Mon', type: 'Rest', zone: '-', duration: '-', notes: 'Complete rest' },
+    { day: 'Tue', type: 'Easy Run', zone: 'Z2', duration: '40 min', pace: '+45s/km', notes: 'Conversational pace' },
+    { day: 'Wed', type: 'Intervals', zone: 'Z4-Z5', duration: '45 min', pace: '-5s/km', notes: '4x800m @5K pace, 400m jog recovery' },
+    { day: 'Thu', type: 'Rest', zone: '-', duration: '-', notes: 'Complete rest or cross-train' },
+    { day: 'Fri', type: 'Tempo Run', zone: 'Z3', duration: '40 min', pace: '+15s/km', notes: '20 min tempo @ comfortable hard' },
+    { day: 'Sat', type: 'Long Run', zone: 'Z2', duration: '60 min', pace: '+45s/km', notes: 'Build endurance, stay relaxed' },
+    { day: 'Sun', type: 'Easy Run', zone: 'Z1', duration: '30 min', pace: '+60s/km', notes: 'Recovery jog' },
+  ];
+}
+
+// Calculate estimated improvements
+export function calculateImprovements(currentPace, targetPace, weeks) {
+  const paceDiff = currentPace - targetPace;
+  const weeklyImprovement = paceDiff / weeks;
+  
+  // Rough estimates based on exercise science
+  return {
+    vo2maxIncrease: `${Math.round(weeks * 0.8)}-${Math.round(weeks * 1.2)}%`,
+    lactateThreshold: `${Math.round(weeks * 0.5)}-${Math.round(weeks * 0.8)}%`,
+    weeklyPaceDrop: `${weeklyImprovement.toFixed(1)}s/km per week`,
+    totalImprovement: `${paceDiff}s/km over ${weeks} weeks`,
+  };
+}
