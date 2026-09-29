@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import CalculatorCard from './CalculatorCard';
-import { DISTANCE_PRESETS, timeToSeconds, secondsToTime, paceToDisplay } from '../utils/runningCalculations';
+import { DISTANCE_PRESETS, timeToSeconds, paceToDisplay } from '../utils/runningCalculations';
 
 export default function PaceCalculator() {
   const [distance, setDistance] = useState(5);
@@ -19,24 +19,23 @@ export default function PaceCalculator() {
     setResult({
       pace: paceToDisplay(paceSeconds),
       speed: speedKmh.toFixed(2),
-      paceRaw: paceSeconds,
     });
   };
 
   return (
-    <CalculatorCard title="Pace Calculator" icon="🏃">
+    <CalculatorCard title="Kalkulator Pace" icon="🏃">
       <div className="space-y-4">
-        {/* Distance */}
+        {/* Distance Presets */}
         <div>
-          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>
-            Distance (km)
+          <label className="block text-xs font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>
+            Jarak (km)
           </label>
-          <div className="flex gap-2 mb-2">
+          <div className="grid grid-cols-4 gap-1.5 md:gap-2 mb-2">
             {DISTANCE_PRESETS.map((preset) => (
               <button
                 key={preset.value}
                 onClick={() => setDistance(preset.value)}
-                className="flex-1 py-2 rounded-lg text-sm font-medium transition-all"
+                className="py-2 px-1 rounded-lg text-xs md:text-sm font-medium transition-all"
                 style={{
                   background: distance === preset.value ? 'var(--primary)' : 'var(--bg)',
                   color: distance === preset.value ? 'white' : 'var(--text-secondary)',
@@ -51,7 +50,7 @@ export default function PaceCalculator() {
             type="number"
             value={distance}
             onChange={(e) => setDistance(parseFloat(e.target.value) || 0)}
-            className="w-full px-4 py-3 rounded-lg border"
+            className="w-full px-3 py-2.5 md:py-3 rounded-lg border text-base"
             style={{ 
               background: 'var(--bg)', 
               borderColor: 'var(--border)',
@@ -62,8 +61,8 @@ export default function PaceCalculator() {
 
         {/* Time */}
         <div>
-          <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>
-            Time
+          <label className="block text-xs font-medium mb-2" style={{ color: 'var(--text-secondary)' }}>
+            Waktu
           </label>
           <div className="grid grid-cols-3 gap-2">
             <div>
@@ -71,15 +70,15 @@ export default function PaceCalculator() {
                 type="number"
                 value={hours}
                 onChange={(e) => setHours(parseInt(e.target.value) || 0)}
-                placeholder="HH"
-                className="w-full px-3 py-3 rounded-lg border text-center"
+                placeholder="JJ"
+                className="w-full px-2 py-2.5 md:py-3 rounded-lg border text-center text-base"
                 style={{ 
                   background: 'var(--bg)', 
                   borderColor: 'var(--border)',
                   color: 'var(--text)'
                 }}
               />
-              <span className="block text-xs mt-1 text-center" style={{ color: 'var(--text-secondary)' }}>Hours</span>
+              <span className="block text-[10px] md:text-xs mt-1 text-center" style={{ color: 'var(--text-secondary)' }}>Jam</span>
             </div>
             <div>
               <input
@@ -87,29 +86,29 @@ export default function PaceCalculator() {
                 value={minutes}
                 onChange={(e) => setMinutes(parseInt(e.target.value) || 0)}
                 placeholder="MM"
-                className="w-full px-3 py-3 rounded-lg border text-center"
+                className="w-full px-2 py-2.5 md:py-3 rounded-lg border text-center text-base"
                 style={{ 
                   background: 'var(--bg)', 
                   borderColor: 'var(--border)',
                   color: 'var(--text)'
                 }}
               />
-              <span className="block text-xs mt-1 text-center" style={{ color: 'var(--text-secondary)' }}>Minutes</span>
+              <span className="block text-[10px] md:text-xs mt-1 text-center" style={{ color: 'var(--text-secondary)' }}>Menit</span>
             </div>
             <div>
               <input
                 type="number"
                 value={seconds}
                 onChange={(e) => setSeconds(parseInt(e.target.value) || 0)}
-                placeholder="SS"
-                className="w-full px-3 py-3 rounded-lg border text-center"
+                placeholder="DD"
+                className="w-full px-2 py-2.5 md:py-3 rounded-lg border text-center text-base"
                 style={{ 
                   background: 'var(--bg)', 
                   borderColor: 'var(--border)',
                   color: 'var(--text)'
                 }}
               />
-              <span className="block text-xs mt-1 text-center" style={{ color: 'var(--text-secondary)' }}>Seconds</span>
+              <span className="block text-[10px] md:text-xs mt-1 text-center" style={{ color: 'var(--text-secondary)' }}>Detik</span>
             </div>
           </div>
         </div>
@@ -117,12 +116,10 @@ export default function PaceCalculator() {
         {/* Calculate Button */}
         <button
           onClick={handleCalculate}
-          className="w-full py-3 rounded-lg font-medium text-white transition-all"
+          className="w-full py-3 rounded-lg font-medium text-white transition-all active:scale-[0.98]"
           style={{ background: 'var(--primary)' }}
-          onMouseEnter={(e) => e.target.style.background = 'var(--primary-light)'}
-          onMouseLeave={(e) => e.target.style.background = 'var(--primary)'}
         >
-          Calculate Pace
+          Hitung Pace
         </button>
 
         {/* Result */}
@@ -130,12 +127,12 @@ export default function PaceCalculator() {
           <div className="p-4 rounded-xl" style={{ background: 'var(--bg)' }}>
             <div className="grid grid-cols-2 gap-4 text-center">
               <div>
-                <p className="text-3xl font-bold" style={{ color: 'var(--primary)' }}>{result.pace}</p>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>min/km</p>
+                <p className="text-2xl md:text-3xl font-bold" style={{ color: 'var(--primary)' }}>{result.pace}</p>
+                <p className="text-xs md:text-sm" style={{ color: 'var(--text-secondary)' }}>min/km</p>
               </div>
               <div>
-                <p className="text-3xl font-bold" style={{ color: 'var(--primary)' }}>{result.speed}</p>
-                <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>km/h</p>
+                <p className="text-2xl md:text-3xl font-bold" style={{ color: 'var(--primary)' }}>{result.speed}</p>
+                <p className="text-xs md:text-sm" style={{ color: 'var(--text-secondary)' }}>km/jam</p>
               </div>
             </div>
           </div>
