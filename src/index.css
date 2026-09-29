@@ -24,8 +24,15 @@
   --border: #292524;
 }
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-html { -webkit-text-size-adjust: 100%; }
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
 
 body {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -35,20 +42,34 @@ body {
   min-height: 100vh;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-#root { min-height: 100vh; min-height: 100dvh; }
+#root {
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+}
 
-input[type="number"] { -moz-appearance: textfield; }
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
 input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 @media (max-width: 768px) {
-  input, select, textarea { font-size: 16px !important; }
+  input, select, textarea {
+    font-size: 16px !important;
+  }
 }
 
-@supports (padding: env(safe-area-inset-bottom)) {
-  .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom); }
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 ::-webkit-scrollbar { width: 4px; }

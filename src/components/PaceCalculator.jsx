@@ -18,9 +18,9 @@ export default function PaceCalculator() {
     <div className="space-y-4">
       <div>
         <label className="text-xs font-medium mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>Jarak</label>
-        <div className="flex gap-1.5">
+        <div className="grid grid-cols-4 gap-1.5">
           {DISTANCE_PRESETS.map(p => (
-            <button key={p.value} onClick={() => setDist(p.value)} className="flex-1 py-2 rounded-lg text-xs font-medium transition-colors"
+            <button key={p.value} onClick={() => setDist(p.value)} className="py-2 rounded-lg text-xs font-medium transition-colors"
               style={{ background: dist === p.value ? 'var(--primary)' : 'var(--surface)', color: dist === p.value ? '#fff' : 'var(--text-secondary)' }}>
               {p.label}
             </button>
@@ -29,25 +29,25 @@ export default function PaceCalculator() {
       </div>
       <div>
         <label className="text-xs font-medium mb-1.5 block" style={{ color: 'var(--text-secondary)' }}>Waktu</label>
-        <div className="flex gap-2 items-center">
-          <input type="number" value={h} onChange={e => setH(+e.target.value || 0)} placeholder="0"
-            className="flex-1 px-3 py-2.5 rounded-lg border text-center text-base" style={{ background: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
-          <span className="font-medium" style={{ color: 'var(--text-secondary)' }}>:</span>
-          <input type="number" value={m} onChange={e => setM(+e.target.value || 0)} placeholder="30"
-            className="flex-1 px-3 py-2.5 rounded-lg border text-center text-base" style={{ background: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
-          <span className="font-medium" style={{ color: 'var(--text-secondary)' }}>:</span>
-          <input type="number" value={s} onChange={e => setS(+e.target.value || 0)} placeholder="0"
-            className="flex-1 px-3 py-2.5 rounded-lg border text-center text-base" style={{ background: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
-        </div>
-        <div className="flex gap-2 mt-1">
-          <span className="flex-1 text-center text-[10px]" style={{ color: 'var(--text-secondary)' }}>Jam</span>
-          <span className="w-4" />
-          <span className="flex-1 text-center text-[10px]" style={{ color: 'var(--text-secondary)' }}>Menit</span>
-          <span className="w-4" />
-          <span className="flex-1 text-center text-[10px]" style={{ color: 'var(--text-secondary)' }}>Detik</span>
+        <div className="grid grid-cols-3 gap-2">
+          <div>
+            <input type="number" value={h} onChange={e => setH(+e.target.value || 0)} placeholder="0"
+              className="w-full px-2 py-3 rounded-lg border text-center text-lg font-medium" style={{ background: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
+            <span className="block text-[10px] text-center mt-1" style={{ color: 'var(--text-secondary)' }}>Jam</span>
+          </div>
+          <div>
+            <input type="number" value={m} onChange={e => setM(+e.target.value || 0)} placeholder="30"
+              className="w-full px-2 py-3 rounded-lg border text-center text-lg font-medium" style={{ background: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
+            <span className="block text-[10px] text-center mt-1" style={{ color: 'var(--text-secondary)' }}>Menit</span>
+          </div>
+          <div>
+            <input type="number" value={s} onChange={e => setS(+e.target.value || 0)} placeholder="0"
+              className="w-full px-2 py-3 rounded-lg border text-center text-lg font-medium" style={{ background: 'var(--bg)', borderColor: 'var(--border)', color: 'var(--text)' }} />
+            <span className="block text-[10px] text-center mt-1" style={{ color: 'var(--text-secondary)' }}>Detik</span>
+          </div>
         </div>
       </div>
-      <button onClick={calc} className="w-full py-3 rounded-lg font-medium text-white text-sm active:scale-[0.98] transition-transform"
+      <button onClick={calc} className="w-full py-3.5 rounded-lg font-medium text-white active:scale-[0.98]"
         style={{ background: 'var(--primary)' }}>Hitung</button>
       {result && (
         <div className="flex gap-4 p-4 rounded-xl" style={{ background: 'var(--surface)' }}>
