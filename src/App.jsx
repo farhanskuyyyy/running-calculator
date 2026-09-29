@@ -47,13 +47,13 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main */}
-      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-4">
+      {/* Main - CRITICAL: flex-1 makes it fill remaining space */}
+      <main className="flex-1 max-w-lg mx-auto w-full px-4 py-4 overflow-y-auto" style={{ paddingBottom: '80px' }}>
         <ActiveComponent />
       </main>
 
       {/* Bottom Nav */}
-      <nav className="sticky bottom-0 border-t safe-area-bottom" style={{ background: 'var(--bg)', borderColor: 'var(--border)' }}>
+      <nav className="fixed bottom-0 left-0 right-0 z-20 border-t safe-area-bottom" style={{ background: 'var(--bg)', borderColor: 'var(--border)' }}>
         <div className="max-w-lg mx-auto flex">
           {calculators.map((c) => (
             <button key={c.id} onClick={() => setActive(c.id)}
