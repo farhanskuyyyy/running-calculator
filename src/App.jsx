@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PaceCalculator from './components/PaceCalculator';
 import DistanceCalculator from './components/DistanceCalculator';
 import TimeCalculator from './components/TimeCalculator';
@@ -17,28 +17,57 @@ const tabs = [
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('pace');
+  const [theme, setTheme] = useState('light');
+
+  useEffect(() => {
+    const saved = localStorage.getItem('theme') || 'light';
+    setTheme(saved);
+    document.documentElement.setAttribute('data-theme', saved);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    document.documentElement.setAttribute('data-theme', newTheme);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-10">
-        <div className="max-w-2xl mx-auto px-4 py-4">
-          <h1 className="text-2xl font-bold text-green-600">🏃 Running Calculator</h1>
-          <p className="text-sm text-gray-500">Training calculator for runners</p>
+    <div className="min-h-screen" style={{ background: 'var(--bg)', color: 'var(--text)' }}>
+      {/* Header */}
+      <header className="sticky top-0 z-10 border-b" style={{ background: 'var(--bg)', borderColor: 'var(--border)' }}>
+        <div className="max-w-2xl mx-auto px-4 py-4 flex items-center justify-between">
+          <div>
+            <h1 className="text-xl font-semibold" style={{ color: 'var(--primary)' }}>
+              Running Calculator
+            </h1>
+            <p className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+              Training calculator for runners
+            </p>
+          </div>
+          <button
+            onClick={toggleTheme}
+            className="p-2 rounded-lg transition-colors"
+            style={{ background: 'var(--surface)' }}
+            aria-label="Toggle theme"
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
         </div>
       </header>
 
       <main className="max-w-2xl mx-auto px-4 py-6">
         {/* Tab Navigation */}
-        <div className="flex gap-1 mb-6 bg-white rounded-xl p-1 shadow-sm border border-gray-100 overflow-x-auto">
+        <div className="flex gap-1 mb-6 p-1 rounded-xl" style={{ background: 'var(--surface)' }}>
           {tabs.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex-1 min-w-[55px] py-3 px-2 rounded-lg text-sm font-medium transition-all ${
-                activeTab === tab.id
-                  ? 'bg-green-500 text-white shadow-sm'
-                  : 'text-gray-600 hover:bg-gray-100'
-              }`}
+              className="flex-1 min-w-[55px] py-3 px-2 rounded-lg text-sm font-medium transition-all"
+              style={{
+                background: activeTab === tab.id ? 'var(--primary)' : 'transparent',
+                color: activeTab === tab.id ? 'white' : 'var(--text-secondary)',
+              }}
             >
               <span className="block text-lg">{tab.icon}</span>
               <span className="block text-xs mt-1">{tab.label}</span>
